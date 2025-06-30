@@ -9,17 +9,6 @@
       # Optionally, use home-manager.extraSpecialArgs to pass
       # arguments to home.nix
     }
-    # setup user group
-    {
-      users.users.ycg = {
-        isSystemUser = true;
-        extraGroups = [ "wheel" ]; # Allow sudo access
-        group = "ycg";
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHl4c+mtLFx/KtE1OefdP706E/HEbV4+xraGGcxRo6vl"
-        ];
-      };
-      users.groups.ycg = { };
-    }
+    ./auth.nix
   ];
 }
