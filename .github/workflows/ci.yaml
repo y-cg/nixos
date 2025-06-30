@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          # - ubuntu-latest
-          - ubuntu-24.04-arm
+          - ubuntu-latest
+          # - ubuntu-24.04-arm
     runs-on:  ${{ matrix.os }}
 
     steps:
@@ -45,5 +45,5 @@ jobs:
         run: nix flake check
 
       - name: Run Test
-        run: nix build .#nixosConfigurations.rpi.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.vps.config.system.build.toplevel
         

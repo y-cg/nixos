@@ -7,21 +7,34 @@
 
   outputs =
     { self, nixpkgs }:
-    {
+    let
+      mkNixosConfig =
+        { system, hostname }:
 
-      # rpi config
-      nixosConfigurations.rpi = nixpkgs.lib.nixosSystem {
+        nixpkgs.lib.nixosSystem {
 
-        system = "aarch64-linux";
+          inherit system;
 
-        specialArgs = {
-          hostname = "rpi";
+          specialArgs = {
+            inherit hostname;
+          };
+
+          modules = [
+            # https://nixos.wiki/wiki/NixOS_modules
+            ./configuration.nix
+          ];
         };
-
-        modules = [
-          # https://nixos.wiki/wiki/NixOS_modules
-          ./configuration.nix
-        ];
+    in
+    {
+      # rpi config
+      nixosConfigurations.rpi = mkNixosConfig {
+        system = "aarch64-linux";
+        hostname = "rpi";
+      };
+      # vps config
+      nixosConfigurations.vps = mkNixosConfig {
+        system = "x86_64-linux";
+        hostname = "vps";
       };
     };
 }
