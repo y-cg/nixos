@@ -10,6 +10,7 @@
     ./fs
     ./networking
     ./utils
+    ./services
   ];
 
   # System packages
