@@ -1,6 +1,7 @@
+{ lib, ... }:
 {
   fileSystems."/" = {
-    device = "/dev/sda1";
-    fsType = "ext4"; # or whatever your filesystem type is
+    device = lib.mkDefault "/dev/sda1";
+    fsType = lib.mkDefault "ext4"; # or whatever your filesystem type is
   };
 }

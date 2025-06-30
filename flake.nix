@@ -3,10 +3,19 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs }:
+    {
+      self,
+      nixpkgs,
+      nixos-generators,
+      ...
+    }:
     let
       mkNixosConfig =
         { system, hostname }:
@@ -35,6 +44,18 @@
       nixosConfigurations.vps = mkNixosConfig {
         system = "x86_64-linux";
         hostname = "vps";
+      };
+      # rpi4 image
+      packages.aarch64-linux.rpi4-sdcard = nixos-generators.nixosGenerate {
+        system = "aarch64-linux";
+        specialArgs = {
+          hostname = "rpi";
+        };
+        modules = [
+          # https://nixos.wiki/wiki/NixOS_modules
+          ./configuration.nix
+        ];
+        format = "sd-aarch64";
       };
     };
 }
