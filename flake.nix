@@ -7,16 +7,26 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       nixos-generators,
+      home-manager,
       ...
     }:
     let
+      modules = [
+        # https://nixos.wiki/wiki/NixOS_modules
+        ./configuration.nix
+        ./home-manager
+      ];
       mkNixosConfig =
         { system, hostname }:
 
@@ -26,12 +36,11 @@
 
           specialArgs = {
             inherit hostname;
+            inherit system;
+            inherit inputs;
           };
 
-          modules = [
-            # https://nixos.wiki/wiki/NixOS_modules
-            ./configuration.nix
-          ];
+          modules = modules;
         };
     in
     {
@@ -50,11 +59,10 @@
         system = "aarch64-linux";
         specialArgs = {
           hostname = "rpi";
+          system = "aarch64-linux";
+          inherit inputs;
         };
-        modules = [
-          # https://nixos.wiki/wiki/NixOS_modules
-          ./configuration.nix
-        ];
+        modules = modules;
         format = "sd-aarch64";
       };
     };

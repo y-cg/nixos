@@ -12,23 +12,11 @@
     ./utils
   ];
 
-  # Users
-  users.users.myuser = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
-    packages = with pkgs; [
-      firefox
-      git
-    ];
-  };
-
   # System packages
   environment.systemPackages = with pkgs; [
     vim
     wget
+    git
   ];
 
   # Enable SSH
