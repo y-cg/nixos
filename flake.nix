@@ -31,7 +31,6 @@
         # https://nixos.wiki/wiki/NixOS_modules
         ./configuration.nix
         ./home-manager
-        ./secrets
       ];
       mkNixosConfig =
         { system, hostname }:

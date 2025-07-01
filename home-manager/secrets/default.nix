@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.agenix.nixosModules.default
+    inputs.agenix.homeManagerModules.default
     ./secrets.nix
   ];
 }
