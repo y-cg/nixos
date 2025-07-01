@@ -1,9 +1,11 @@
 { pkgs, ... }:
 {
+  security.sudo.wheelNeedsPassword = false;
   users.users.ycg = {
     createHome = true;
     home = "/home/ycg";
     isSystemUser = true;
+    hashedPassword = ""; # Empty password
     # System users in NixOS don't get a login shell by default
     shell = pkgs.zsh;
     extraGroups = [ "wheel" ]; # Allow sudo access
