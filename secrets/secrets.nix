@@ -1,5 +1,3 @@
-{ config, ... }:
-let home = config.home-manager.users.ycg.home.homeDirectory; in
 {
   age = {
     secrets = {
@@ -8,7 +6,7 @@ let home = config.home-manager.users.ycg.home.homeDirectory; in
       };
     };
     # see https://github.com/ryantm/agenix/issues/300
-    secretsDir = "${home}/.secrets"; # better place?
-    identityPaths = [ "${home}/.ssh/id_ed25519" ]; # I think it uses ~/.ssh/id_rsa by default
+    secretsDir = "/.secrets";
+    identityPaths = [ "~/.ssh/id_ed25519" ]; # I believe it uses ~/.ssh/id_rsa by default
   };
 }
