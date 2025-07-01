@@ -1,4 +1,4 @@
 {
   # Time zone
-  time.timeZone = "America/New_York";
+  time.timeZone = "Asia/Shanghai";
 }
