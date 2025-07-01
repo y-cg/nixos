@@ -1,14 +1,12 @@
 { pkgs, ... }:
 {
-  # make sure the ca cert up to date
-  security.pki.certificateFiles = [
-    "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-  ];
-
-  # See: https://www.sectigo.com/resource-library/enhancements-to-root-ca-and-hierarchies
   security.pki.certificates = [
+    # See: https://www.sectigo.com/resource-library/enhancements-to-root-ca-and-hierarchies
+    # add this cert because cloudflare cert chain rely on this root
     # AAA Certificate Services from https://curl.se/ca/cacert-2025-02-25.pem
     ''
+      Comodo AAA Services root
+      ========================
       -----BEGIN CERTIFICATE-----
       MIIEMjCCAxqgAwIBAgIBATANBgkqhkiG9w0BAQUFADB7MQswCQYDVQQGEwJHQjEbMBkGA1UECAwS
       R3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHDAdTYWxmb3JkMRowGAYDVQQKDBFDb21vZG8gQ0Eg
