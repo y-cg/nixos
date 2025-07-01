@@ -11,6 +11,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,6 +23,7 @@
       nixpkgs,
       nixos-generators,
       home-manager,
+      agenix,
       ...
     }:
     let
@@ -26,6 +31,7 @@
         # https://nixos.wiki/wiki/NixOS_modules
         ./configuration.nix
         ./home-manager
+        ./secrets
       ];
       mkNixosConfig =
         { system, hostname }:
