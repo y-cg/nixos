@@ -10,4 +10,8 @@
       fsType = "ext4";
     };
   };
+
+  sdImage = {
+    firmwareSize = 512; # 256MB instead of 30MB
+  };
 }
