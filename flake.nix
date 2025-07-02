@@ -27,14 +27,14 @@
       ...
     }:
     let
-      modules = [
+      defaultModules = [
         # https://nixos.wiki/wiki/NixOS_modules
         ./configuration.nix
         ./home-manager
         ./overlays
       ];
       mkNixosConfig =
-        { system, hostname }:
+        { system, hostname, extraModules ? [] }:
 
         nixpkgs.lib.nixosSystem {
 
@@ -46,7 +46,7 @@
             inherit inputs;
           };
 
-          modules = modules;
+          modules = defaultModules ++ extraModules;
         };
     in
     {
@@ -54,6 +54,7 @@
       nixosConfigurations.rpi = mkNixosConfig {
         system = "aarch64-linux";
         hostname = "rpi";
+        extraModules = [ ./specific/rpi4 ];
       };
       # vps config
       nixosConfigurations.vps = mkNixosConfig {
@@ -68,7 +69,7 @@
           system = "aarch64-linux";
           inherit inputs;
         };
-        modules = modules ++ [ ./specific/rpi4 ];
+        modules = defaultModules ++ [ ./specific/rpi4 ];
         format = "sd-aarch64";
       };
     };
