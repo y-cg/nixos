@@ -3,7 +3,8 @@
   imports = [
     {
       nixpkgs.overlays = [
-        (import ./cacert.nix)
+        # This lead to cache miss and trigger lots of rebuild
+        # (import ./cacert.nix)
       ];
     }
   ];
