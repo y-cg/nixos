@@ -1,5 +1,6 @@
 {
   imports = [
-    ./wifi.nix
+    ./boot.nix
+    ./fs.nix
   ];
 }
