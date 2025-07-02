@@ -1,8 +1,7 @@
-{ hostname, ... }:
+{ ... }:
 {
-  # Hostname
-  networking.hostName = hostname;
-
-  # Enable networking
-  networking.networkmanager.enable = true;
+  imports = [
+    ./general.nix
+    ./firewall.nix
+  ];
 }
