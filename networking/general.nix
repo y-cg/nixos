@@ -1,5 +1,5 @@
-{ hostname, ... }:
+{ extra, ... }:
 {
   # Hostname
-  networking.hostName = hostname;
+  networking.hostName = extra.hostname;
 }

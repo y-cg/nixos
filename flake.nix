@@ -33,46 +33,55 @@
         ./home-manager
         ./overlays
       ];
-      mkNixosConfig =
+      mkExtraConfig =
         {
           system,
           hostname,
           extraModules ? [ ],
+          isImage ? false,
         }:
-
-        nixpkgs.lib.nixosSystem {
-
+        {
           inherit system;
-
+          inherit hostname;
+          inherit extraModules;
+          inherit isImage;
+        };
+      mkNixosConfig =
+        { extra }:
+        nixpkgs.lib.nixosSystem {
+          system = extra.system;
           specialArgs = {
-            inherit hostname;
-            inherit system;
             inherit inputs;
-            isImage = false;
+            inherit extra;
           };
-
-          modules = defaultModules ++ extraModules;
+          modules = defaultModules ++ extra.extraModules;
         };
     in
     {
       # rpi config
       nixosConfigurations.rpi = mkNixosConfig {
-        system = "aarch64-linux";
-        hostname = "rpi";
-        extraModules = [ ./specific/rpi4 ];
+        extra = mkExtraConfig {
+          system = "aarch64-linux";
+          hostname = "rpi";
+          extraModules = [ ./specific/rpi4 ];
+        };
       };
       # vps config
       nixosConfigurations.vps = mkNixosConfig {
-        system = "x86_64-linux";
-        hostname = "vps";
+        extra = mkExtraConfig {
+          system = "x86_64-linux";
+          hostname = "vps";
+        };
       };
       # rpi4 image
       packages.aarch64-linux.rpi4-sdcard = nixos-generators.nixosGenerate {
         system = "aarch64-linux";
         specialArgs = {
-          hostname = "rpi";
-          system = "aarch64-linux";
-          isImage = true;
+          extra = mkExtraConfig {
+            system = "aarch64-linux";
+            hostname = "rpi";
+            isImage = true;
+          };
           inherit inputs;
         };
         modules = defaultModules ++ [ ./specific/rpi4 ];

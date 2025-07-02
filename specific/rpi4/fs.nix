@@ -1,4 +1,4 @@
-{ isImage, ... }:
+{ extra, ... }:
 {
   fileSystems = {
     # There is no U-Boot on the Pi 4 (yet) -- the firmware partition has to be mounted as /boot.
@@ -15,7 +15,7 @@
 }
 
 // (
-  if isImage then
+  if extra.isImage then
     {
       # Only apply sdImage configuration when building an image
       sdImage = {
