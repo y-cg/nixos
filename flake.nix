@@ -68,7 +68,7 @@
           system = "aarch64-linux";
           inherit inputs;
         };
-        modules = modules;
+        modules = modules ++ [ ./specific/rpi4 ];
         format = "sd-aarch64";
       };
     };
