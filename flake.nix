@@ -34,7 +34,11 @@
         ./overlays
       ];
       mkNixosConfig =
-        { system, hostname, extraModules ? [] }:
+        {
+          system,
+          hostname,
+          extraModules ? [ ],
+        }:
 
         nixpkgs.lib.nixosSystem {
 
@@ -44,6 +48,7 @@
             inherit hostname;
             inherit system;
             inherit inputs;
+            isImage = false;
           };
 
           modules = defaultModules ++ extraModules;
@@ -67,6 +72,7 @@
         specialArgs = {
           hostname = "rpi";
           system = "aarch64-linux";
+          isImage = true;
           inherit inputs;
         };
         modules = defaultModules ++ [ ./specific/rpi4 ];
