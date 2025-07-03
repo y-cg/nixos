@@ -3,10 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -19,15 +15,27 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-raspberrypi = {
+      url = "github:nvmd/nixos-raspberrypi/main";
+    };
+  };
+
+  nixConfig = {
+    extra-substituters = [
+      "https://nixos-raspberrypi.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+    ];
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
-      nixos-generators,
       home-manager,
       agenix,
+      nixos-raspberrypi,
       ...
     }:
     let
@@ -36,6 +44,11 @@
         ./configuration.nix
         ./home-manager
         ./overlays
+      ];
+      rpi4Modules = [
+        ./specific/rpi4
+        nixos-raspberrypi.nixosModules.raspberry-pi-4.base
+        nixos-raspberrypi.nixosModules.sd-image
       ];
       mkExtraConfig =
         {
@@ -63,12 +76,17 @@
     in
     {
       # rpi config
-      nixosConfigurations.rpi = mkNixosConfig {
-        extra = mkExtraConfig {
-          system = "aarch64-linux";
-          hostname = "rpi";
-          extraModules = [ ./specific/rpi4 ];
+      nixosConfigurations.rpi = nixos-raspberrypi.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = {
+          extra = mkExtraConfig {
+            system = "aarch64-linux";
+            hostname = "rpi";
+          };
+          inherit inputs;
+          inherit nixos-raspberrypi;
         };
+        modules = defaultModules ++ rpi4Modules;
       };
       # vps config
       nixosConfigurations.vps = mkNixosConfig {
@@ -78,18 +96,13 @@
         };
       };
       # rpi4 image
-      packages.aarch64-linux.rpi4-sdcard = nixos-generators.nixosGenerate {
-        system = "aarch64-linux";
-        specialArgs = {
-          extra = mkExtraConfig {
-            system = "aarch64-linux";
-            hostname = "rpi";
-            isImage = true;
-          };
-          inherit inputs;
+      images =
+        let
+          nixos = self.nixosConfigurations;
+          mkImage = nixosConfig: nixosConfig.config.system.build.sdImage;
+        in
+        {
+          rpi4 = mkImage nixos."rpi";
         };
-        modules = defaultModules ++ [ ./specific/rpi4 ];
-        format = "sd-aarch64";
-      };
     };
 }
