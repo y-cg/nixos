@@ -3,6 +3,6 @@
   imports = [
     ./general.nix
     ./firewall.nix
-    ./wifi.nix
+    ./network-manager.nix
   ];
 }
