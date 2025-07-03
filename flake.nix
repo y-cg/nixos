@@ -2,7 +2,10 @@
   description = "YCG's NixOS";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    # nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    # Pin nixpkgs version because devenv fail to build
+    # See: https://github.com/nixos/nixpkgs/issues/420134
+    nixpkgs.url = "github:NixOS/nixpkgs/?rev=8f49bca3dc47f48ef46511613450364fd82b0b36";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
