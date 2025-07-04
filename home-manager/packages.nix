@@ -36,6 +36,12 @@
     direnv
     nixfmt-rfc-style
     nixd
+    nix-output-monitor
+    # docker
+    lazydocker
+    dive
+    # python
+    uv
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

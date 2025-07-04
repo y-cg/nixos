@@ -10,4 +10,7 @@
 
   # Direnv
   programs.direnv.enable = true;
+
+  # uv
+  programs.uv.enable = true;
 }
