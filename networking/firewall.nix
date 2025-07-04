@@ -9,6 +9,9 @@
       "Meta"
       "Mihomo"
       "utun0"
+      # docker related
+      "docker0"
+      "br-+" # docker bridge start with `br-`
     ];
     checkReversePath = false;
   };
