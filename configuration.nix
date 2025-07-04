@@ -21,6 +21,9 @@
     cacert
   ];
 
+  # Run unpatched dynamic binaries on NixOS.
+  programs.nix-ld.enable = true;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken.
