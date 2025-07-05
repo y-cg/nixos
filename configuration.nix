@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./fs
     ./networking
     ./utils
     ./services

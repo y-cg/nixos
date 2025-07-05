@@ -96,6 +96,7 @@
         extra = mkExtraConfig {
           system = "x86_64-linux";
           hostname = "vps";
+          extraModules = [ ./specific/server ];
         };
       };
       # rpi4 image
