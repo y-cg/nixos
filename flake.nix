@@ -21,6 +21,9 @@
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
     };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+    };
   };
 
   nixConfig = {
@@ -39,6 +42,7 @@
       home-manager,
       agenix,
       nixos-raspberrypi,
+      nixos-wsl,
       ...
     }:
     let
@@ -87,6 +91,11 @@
         system = "x86_64-linux";
         hostname = "vps";
         extraModules = [ ./specific/server ];
+      });
+      nixosConfigurations.wsl = nixpkgs.lib.nixosSystem (mkNixosConfig {
+        system = "x86_64-linux";
+        hostname = "wsl";
+        extraModules = [ ./specific/wsl ];
       });
       # rpi4 image
       images =
