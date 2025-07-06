@@ -21,6 +21,9 @@
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
     };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/main";
+    };
   };
 
   nixConfig = {
@@ -39,6 +42,7 @@
       home-manager,
       agenix,
       nixos-raspberrypi,
+      nixos-wsl,
       ...
     }:
     let
@@ -53,52 +57,46 @@
         nixos-raspberrypi.nixosModules.raspberry-pi-4.base
         nixos-raspberrypi.nixosModules.sd-image
       ];
-      mkExtraConfig =
+      mkNixosConfig =
         {
           system,
           hostname,
           extraModules ? [ ],
+          extraSpecialArgs ? { },
           isImage ? false,
         }:
         {
           inherit system;
-          inherit hostname;
-          inherit extraModules;
-          inherit isImage;
-        };
-      mkNixosConfig =
-        { extra }:
-        nixpkgs.lib.nixosSystem {
-          system = extra.system;
           specialArgs = {
             inherit inputs;
-            inherit extra;
-          };
-          modules = defaultModules ++ extra.extraModules;
+            extra = {
+              inherit system;
+              inherit hostname;
+              inherit isImage;
+            };
+          } // extraSpecialArgs;
+          modules = defaultModules ++ extraModules;
         };
     in
     {
       # rpi config
-      nixosConfigurations.rpi = nixos-raspberrypi.lib.nixosSystem {
+      nixosConfigurations.rpi = nixos-raspberrypi.lib.nixosSystem (mkNixosConfig {
         system = "aarch64-linux";
-        specialArgs = {
-          extra = mkExtraConfig {
-            system = "aarch64-linux";
-            hostname = "rpi";
-          };
-          inherit inputs;
-          inherit nixos-raspberrypi;
-        };
-        modules = defaultModules ++ rpi4Modules;
-      };
+        hostname = "rpi";
+        extraModules = rpi4Modules;
+        extraSpecialArgs = { inherit nixos-raspberrypi; };
+      });
       # vps config
-      nixosConfigurations.vps = mkNixosConfig {
-        extra = mkExtraConfig {
-          system = "x86_64-linux";
-          hostname = "vps";
-          extraModules = [ ./specific/server ];
-        };
-      };
+      nixosConfigurations.vps = nixpkgs.lib.nixosSystem (mkNixosConfig {
+        system = "x86_64-linux";
+        hostname = "vps";
+        extraModules = [ ./specific/server ];
+      });
+      nixosConfigurations.wsl = nixpkgs.lib.nixosSystem (mkNixosConfig {
+        system = "x86_64-linux";
+        hostname = "wsl";
+        extraModules = [ ./specific/wsl ];
+      });
       # rpi4 image
       images =
         let

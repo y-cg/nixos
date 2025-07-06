@@ -13,6 +13,9 @@ jobs:
         os:
           - ubuntu-latest
           # - ubuntu-24.04-arm
+        host:
+          - vps
+          - wsl
     runs-on:  ${{ matrix.os }}
 
     steps:
@@ -44,8 +47,8 @@ jobs:
       - name: Flake Check
         run: nix flake check
 
-      - name: Run Test
-        run: nix build .#nixosConfigurations.vps.config.system.build.toplevel
+      - name: Build TopLevel / ${{ matrix.host }}
+        run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
         
   build-rpi4-image:
     strategy:
