@@ -22,18 +22,9 @@ in
       # https://www.home-assistant.io/integrations/isal
       "isal"
     ];
-    customComponents = [
-      (
-        with pkgs-unstable.python313Packages;
-        pkgs-unstable.python313Packages.callPackage ./ha-xiaomi-home.nix {
-          inherit construct;
-          inherit paho-mqtt;
-          inherit numpy;
-          inherit cryptography;
-          inherit psutil;
-        }
-      )
-    ];
+    # pkgs is 25.05, where home-assistant is patched by unstable channel
+    # use same flake input to make sure python packages build in corret manner
+    customComponents = (import ./custom-components.nix { pkgs = pkgs-unstable; });
     config = {
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/

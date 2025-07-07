@@ -2,7 +2,7 @@
   imports = [
     ./boot.nix
     ./fs.nix
-    ./home-assistant/home-assistant.nix
+    ./home-assistant
     ./containers
   ];
 }
