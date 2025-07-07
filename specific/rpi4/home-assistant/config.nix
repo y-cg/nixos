@@ -17,7 +17,7 @@ in
       "met"
       "radio_browser"
       "shopping_list"
-      "homekit_controller"
+      "homekit"
       # Recommended for fast zlib compression
       # https://www.home-assistant.io/integrations/isal
       "isal"
@@ -33,5 +33,6 @@ in
   };
   networking.firewall.allowedTCPPorts = [
     8123
+    21064 # homekit-bridge use this by default
   ];
 }
