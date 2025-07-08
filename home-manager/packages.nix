@@ -42,6 +42,10 @@
     dive
     # python
     uv
+    # cryptography tools
+    age
+    sops
+    ssh-to-age
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
