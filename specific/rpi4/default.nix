@@ -5,5 +5,6 @@
     ./bluetooth.nix
     ./home-assistant
     ./containers
+    ./garage.nix
   ];
 }
