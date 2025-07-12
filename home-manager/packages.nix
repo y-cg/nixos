@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
+let
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+in
 {
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -23,6 +26,8 @@
     flamelens
     nettools
     tlrc
+    # fixme: mitmproxy broken in 25.05
+    pkgs-unstable.mitmproxy
     # shell
     starship
     zsh
@@ -46,6 +51,7 @@
     age
     sops
     ssh-to-age
+    openssl
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
