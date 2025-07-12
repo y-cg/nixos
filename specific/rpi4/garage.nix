@@ -20,4 +20,8 @@
       lmdb_map_size = "4G";
     };
   };
+  networking = {
+    firewall.allowedTCPPorts = [ 3900 ];
+  };
+
 }
