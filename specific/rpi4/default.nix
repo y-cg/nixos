@@ -6,5 +6,6 @@
     ./home-assistant
     ./containers
     ./garage.nix
+    ./cloudflared.nix
   ];
 }
