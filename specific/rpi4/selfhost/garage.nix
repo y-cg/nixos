@@ -15,7 +15,8 @@
       rpc_secret_file = "/var/lib/garage/rpc-secret";
       s3_api = {
         api_bind_addr = "[::]:3900";
-        s3_region = "garage";
+        # for maximum compatibility (default aws region is us-east-1)
+        s3_region = "us-east-1";
       };
       lmdb_map_size = "4G";
     };
