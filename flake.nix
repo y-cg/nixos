@@ -22,6 +22,10 @@
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -42,6 +46,7 @@
       agenix,
       nixos-raspberrypi,
       nixos-wsl,
+      disko,
       ...
     }:
     let

@@ -1,6 +1,8 @@
+{ inputs, ... }:
 {
   imports = [
     ./boot.nix
-    ./fs.nix
+    inputs.disko.nixosModules.disko
+    ./disk.nix
   ];
 }
