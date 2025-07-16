@@ -59,12 +59,4 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
-
-  # See https://github.com/NixOS/nix/issues/6536#issuecomment-1254858889
-  # `!` is necessary
-  # key-format: github.com=<github-pat>
-  # See: https://nix.dev/manual/nix/2.24/command-ref/conf-file
-  xdg.configFile."nix/nix.conf".text = ''
-    experimental-features = nix-command flakes
-  '';
 }
