@@ -10,8 +10,7 @@ in
     gcc
     gnumake
     # nvim
-    # nvchad
-    neovim
+    nvchad
     # git
     gh
     git

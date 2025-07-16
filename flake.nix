@@ -26,6 +26,15 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix4nvchad = {
+      url = "github:nix-community/nix4nvchad";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nvchad-starter.follows = "nvchad-config";
+    };
+    nvchad-config = {
+      url = "github:NvChad/starter";
+      flake = false;
+    };
   };
 
   nixConfig = {
@@ -47,6 +56,8 @@
       nixos-raspberrypi,
       nixos-wsl,
       disko,
+      nix4nvchad,
+      nvchad-config,
       ...
     }:
     let

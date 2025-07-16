@@ -6,5 +6,6 @@
     ./ssh.nix
     ./zsh.nix
     ./tmux.nix
+    ./nvchad.nix
   ];
 }
