@@ -1,10 +1,5 @@
 {
   # bring inputs and system into scope via extraSpecialArgs
-  inputs,
-  system,
-  host,
-  pkgs,
-  config,
   ...
 }:
 
@@ -14,7 +9,6 @@
     ./modules/programs
   ];
 
-  home.username = "ycg";
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
   # introduces backwards incompatible changes.

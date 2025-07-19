@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, extra, ... }:
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -6,9 +6,10 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        users.ycg = ./home.nix;
+        users."${extra.whoami}" = ./home.nix;
         extraSpecialArgs = {
           inherit inputs;
+          inherit extra;
         };
       };
       # Optionally, use home-manager.extraSpecialArgs to pass

@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, extra, ... }:
 {
   security.sudo.wheelNeedsPassword = false;
-  users.users.ycg = {
+  users.users."${extra.whoami}" = {
     createHome = true;
-    home = "/home/ycg";
+    home = if pkgs.stdenv.isDarwin then "/Users/${extra.whoami}" else "/home/${extra.whoami}";
     isNormalUser = true; # Seems that agenix works with normal users
     hashedPassword = ""; # Empty password
     # System users in NixOS don't get a login shell by default

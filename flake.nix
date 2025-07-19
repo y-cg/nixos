@@ -76,6 +76,7 @@
         {
           system,
           hostname,
+          whoami ? "ycg",
           extraModules ? [ ],
           extraSpecialArgs ? { },
           isImage ? false,
@@ -88,6 +89,7 @@
             extra = {
               inherit system;
               inherit hostname;
+              inherit whoami;
               inherit isImage;
             };
           } // extraSpecialArgs;
