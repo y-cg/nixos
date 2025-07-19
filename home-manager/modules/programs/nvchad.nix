@@ -6,7 +6,7 @@
     enable = true;
     extraPackages = with pkgs; [ ];
     hm-activation = true;
-    backup = true;
+    backup = false;
     neovim = pkgs.neovim;
   };
 

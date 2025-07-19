@@ -32,7 +32,7 @@
       inputs.nvchad-starter.follows = "nvchad-config";
     };
     nvchad-config = {
-      url = "github:NvChad/starter";
+      url = "github:y-cg/nvchad";
       flake = false;
     };
   };

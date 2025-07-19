@@ -333,16 +333,16 @@
     "nvchad-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1750439787,
-        "narHash": "sha256-+UcDn0rTYKlaPi0ybUhYtsdPGPqKChDIPtafjf/in8g=",
-        "owner": "NvChad",
-        "repo": "starter",
-        "rev": "5c656910f058ecdc6753c6a4f39b64afce89a0e6",
+        "lastModified": 1752734560,
+        "narHash": "sha256-ZAFaB/TLTRs85xwJkNVqpKYG2jvyUBq2k+6vaJdvK00=",
+        "owner": "y-cg",
+        "repo": "nvchad",
+        "rev": "5236e8c1d7f464128ffc6fbf56d8d2970eb9f966",
         "type": "github"
       },
       "original": {
-        "owner": "NvChad",
-        "repo": "starter",
+        "owner": "y-cg",
+        "repo": "nvchad",
         "type": "github"
       }
     },
