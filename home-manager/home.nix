@@ -10,7 +10,6 @@
 
 {
   imports = [
-    ./secrets
     ./packages.nix
     ./modules/programs
   ];
