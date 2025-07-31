@@ -117,4 +117,4 @@ jobs:
         run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
       - name: Push to Attic
-        run: attic push central:${{ secrets.ATTIC_CACHE }} ./result
+        run: attic push --jobs 2 central:${{ secrets.ATTIC_CACHE }} ./result
