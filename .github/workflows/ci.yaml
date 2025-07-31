@@ -90,3 +90,31 @@ jobs:
       - name: Run Test
         run: nix build .#images.rpi4
         
+  cache-build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-24.04-arm
+        host:
+          - rpi
+    runs-on:  ${{ matrix.os }}
+
+    steps:
+      - name: Checkout tree
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: nixbuild/nix-quick-install-action@v32
+
+      - name: Setup Attic
+        run: |
+          nix profile install 'nixpkgs#attic-client'
+          attic login central ${{ secrets.ATTIC_ENDPOINT }} ${{ secrets.ATTIC_TOKEN }}
+          attic use central:${{ secrets.ATTIC_CACHE }}
+
+      - name: Build TopLevel / ${{ matrix.host }}
+        run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+
+      - name: Push to Attic
+        run: attic push central:${{ secrets.ATTIC_CACHE }} ./result
