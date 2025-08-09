@@ -61,60 +61,32 @@
       ...
     }:
     let
-      defaultModules = [
-        # https://nixos.wiki/wiki/NixOS_modules
-        ./configuration.nix
-        ./home-manager
-        ./overlays
-      ];
-      rpi4Modules = [
-        ./specific/rpi4
-        nixos-raspberrypi.nixosModules.raspberry-pi-4.base
-        nixos-raspberrypi.nixosModules.sd-image
-      ];
-      mkNixosConfig =
+      mkNixosSystem =
         {
-          system,
-          hostname,
-          whoami ? "ycg",
-          extraModules ? [ ],
-          extraSpecialArgs ? { },
-          isImage ? false,
+          meta,
+          nixosModules,
+          extraSpecialArgs,
+          f ? nixpkgs.lib.nixosSystem,
+          ...
         }:
-        {
-          inherit system;
+        f {
+          system = meta.system;
           specialArgs = {
             inherit inputs;
             inherit nixpkgs-unstable;
-            extra = {
-              inherit system;
-              inherit hostname;
-              inherit whoami;
-              inherit isImage;
-            };
+            extra = meta;
           } // extraSpecialArgs;
-          modules = defaultModules ++ extraModules;
+          modules = nixosModules;
         };
     in
     {
       # rpi config
-      nixosConfigurations.rpi = nixos-raspberrypi.lib.nixosSystem (mkNixosConfig {
-        system = "aarch64-linux";
-        hostname = "rpi";
-        extraModules = rpi4Modules;
-        extraSpecialArgs = { inherit nixos-raspberrypi; };
-      });
+      nixosConfigurations.rpi = mkNixosSystem (import ./configurations/rpi4.nix { inherit inputs; });
       # vps config
-      nixosConfigurations.vps = nixpkgs.lib.nixosSystem (mkNixosConfig {
-        system = "x86_64-linux";
-        hostname = "vps";
-        extraModules = [ ./specific/server ];
-      });
-      nixosConfigurations.wsl = nixpkgs.lib.nixosSystem (mkNixosConfig {
-        system = "x86_64-linux";
-        hostname = "wsl";
-        extraModules = [ ./specific/wsl ];
-      });
+      nixosConfigurations.vps = mkNixosSystem (import ./configurations/server.nix { inherit inputs; });
+      # wsl config
+      nixosConfigurations.wsl = mkNixosSystem (import ./configurations/wsl.nix { inherit inputs; });
+
       # rpi4 image
       images =
         let
@@ -124,5 +96,6 @@
         {
           rpi4 = mkImage nixos."rpi";
         };
+
     };
 }
