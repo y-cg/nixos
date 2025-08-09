@@ -65,7 +65,7 @@
         {
           meta,
           nixosModules,
-          extraSpecialArgs,
+          extraSpecialArgs ? { },
           f ? nixpkgs.lib.nixosSystem,
           ...
         }:
