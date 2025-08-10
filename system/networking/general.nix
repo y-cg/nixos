@@ -1,5 +1,5 @@
-{ extra, ... }:
+{ meta, ... }:
 {
   # Hostname
-  networking.hostName = extra.hostname;
+  networking.hostName = meta.hostname;
 }

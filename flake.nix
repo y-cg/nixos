@@ -72,9 +72,7 @@
         f {
           system = meta.system;
           specialArgs = {
-            inherit inputs;
-            inherit nixpkgs-unstable;
-            extra = meta;
+            inherit inputs nixpkgs-unstable meta;
           } // extraSpecialArgs;
           modules = nixosModules;
         };

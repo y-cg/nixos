@@ -1,11 +1,11 @@
-{ inputs, extra, ... }:
+{ inputs, meta, ... }:
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
     {
       wsl = {
         enable = true;
-        defaultUser = extra.whoami;
+        defaultUser = meta.whoami;
       };
     }
   ];
