@@ -10,7 +10,6 @@
   nixosModules = [
     ../specific/server
     ../home-manager
-    ../overlays
     ../system
   ];
 

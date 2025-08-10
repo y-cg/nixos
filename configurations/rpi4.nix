@@ -10,7 +10,6 @@
   nixosModules = [
     ../specific/rpi4
     ../home-manager
-    ../overlays
     ../system
     inputs.nixos-raspberrypi.nixosModules.sd-image
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.base

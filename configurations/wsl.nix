@@ -10,7 +10,6 @@
   nixosModules = [
     ../specific/wsl
     ../home-manager
-    ../overlays
     ../system
   ];
 

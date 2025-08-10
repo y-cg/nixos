@@ -9,8 +9,6 @@ in
     # compilers
     gcc
     gnumake
-    # nvim
-    nvchad
     # git
     gh
     git
