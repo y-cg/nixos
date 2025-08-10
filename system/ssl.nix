@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   security.pki.certificates = [
     # See: https://www.sectigo.com/resource-library/enhancements-to-root-ca-and-hierarchies
