@@ -16,11 +16,16 @@ let
   };
 in
 {
+
+  home.packages = with pkgs; [
+    tmux
+  ];
+
   programs.tmux = {
     enable = true;
     shell = "${pkgs.zsh}/bin/zsh";
     terminal = "xterm-256color";
-    plugins = with pkgs; [
+    plugins = [
       {
         plugin = tmux-nord;
         extraConfig = '''';

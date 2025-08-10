@@ -31,7 +31,6 @@ in
     eza
     zoxide
     fzf
-    tmux
     # nix
     nix-search-cli
     devenv
