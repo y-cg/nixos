@@ -5,5 +5,6 @@
     ./ssl.nix
     ./general.nix
     ./networking
+    ./services
   ];
 }
