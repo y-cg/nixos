@@ -32,7 +32,7 @@ let
       or (throw "Unsupported system: ${stdenv.hostPlatform.system}");
 in
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "snell-server-v5";
   inherit version;
 

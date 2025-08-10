@@ -1,6 +1,6 @@
 {
   imports = [
-    ./garage.nix
+    ./immich
     ./home-assistant
     ./technitium.nix
   ];

@@ -1,6 +1,4 @@
 {
-  stdenv,
-  pkgs,
   fetchFromGitHub,
   buildHomeAssistantComponent,
   construct,
@@ -8,6 +6,7 @@
   numpy,
   cryptography,
   psutil,
+  ...
 }:
 
 buildHomeAssistantComponent rec {
