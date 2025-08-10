@@ -31,9 +31,13 @@ in
     eza
     zoxide
     fzf
-    # dev tools
+    # nix
+    nix-search-cli
     devenv
     direnv
+    nixfmt-rfc-style
+    nixd
+    nix-output-monitor
     # docker
     lazydocker
     dive
