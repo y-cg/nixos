@@ -15,6 +15,6 @@
       # Optionally, use home-manager.extraSpecialArgs to pass
       # arguments to home.nix
     }
-    ./auth.nix
+    ./me.nix
   ];
 }
