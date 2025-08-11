@@ -10,13 +10,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-          # - ubuntu-24.04-arm
-        host:
-          - vps
-          - wsl
-    runs-on:  ${{ matrix.os }}
+        include:
+          - host: vps
+            os: ubuntu-latest
+          - host: wsl
+            os: ubuntu-latest
+          - host: rpi
+            os: ubuntu-24.04-arm
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout tree
@@ -49,14 +51,14 @@ jobs:
 
       - name: Build TopLevel / ${{ matrix.host }}
         run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
-        
+
   build-rpi4-image:
     strategy:
       fail-fast: false
       matrix:
         os:
           - ubuntu-24.04-arm
-    runs-on:  ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout tree
@@ -89,4 +91,3 @@ jobs:
 
       - name: Run Test
         run: nix build .#images.rpi4
-        
