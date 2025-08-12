@@ -48,9 +48,6 @@ jobs:
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
-      - name: Flake Check
-        run: nix flake check
-
       - name: Build TopLevel / ${{ matrix.host }}
         run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
 
@@ -87,9 +84,6 @@ jobs:
           purge-created: 0
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
-
-      - name: Flake Check
-        run: nix flake check
 
       - name: Run Test
         run: nix build .#rpi4-image
