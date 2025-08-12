@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -51,6 +52,7 @@
       self,
       nixpkgs,
       nixpkgs-unstable,
+      flake-utils,
       home-manager,
       agenix,
       nixos-raspberrypi,
@@ -77,23 +79,23 @@
           modules = nixosModules;
         };
     in
-    {
+    flake-utils.lib.eachSystem [ "aarch64-linux" ] (
+      system:
+      let
+        nixos = self.nixosConfigurations;
+        mkImage = nixosConfig: nixosConfig.config.system.build.sdImage;
+      in
+      {
+        packages.rpi4-image = mkImage nixos.rpi;
+      }
+    )
+    // {
       # rpi config
       nixosConfigurations.rpi = mkNixosSystem (import ./configurations/rpi4.nix { inherit inputs; });
       # vps config
       nixosConfigurations.vps = mkNixosSystem (import ./configurations/server.nix { inherit inputs; });
       # wsl config
       nixosConfigurations.wsl = mkNixosSystem (import ./configurations/wsl.nix { inherit inputs; });
-
-      # rpi4 image
-      images =
-        let
-          nixos = self.nixosConfigurations;
-          mkImage = nixosConfig: nixosConfig.config.system.build.sdImage;
-        in
-        {
-          rpi4 = mkImage nixos."rpi";
-        };
 
     };
 }

@@ -92,4 +92,4 @@ jobs:
         run: nix flake check
 
       - name: Run Test
-        run: nix build .#images.rpi4
+        run: nix build .#rpi4-image
