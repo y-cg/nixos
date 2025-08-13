@@ -9,8 +9,11 @@
   # https://nixos.wiki/wiki/NixOS_modules
   nixosModules = [
     ../specific/server
-    ../home-manager
     ../system
+  ];
+
+  homeManagerModules = [
+    ../homeManagerModules
   ];
 
 }

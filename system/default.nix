@@ -7,5 +7,6 @@
     ./packages.nix
     ./networking
     ./services
+    ./users.nix
   ];
 }

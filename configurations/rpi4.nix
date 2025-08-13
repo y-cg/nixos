@@ -9,10 +9,13 @@
   # https://nixos.wiki/wiki/NixOS_modules
   nixosModules = [
     ../specific/rpi4
-    ../home-manager
     ../system
     inputs.nixos-raspberrypi.nixosModules.sd-image
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.base
+  ];
+
+  homeManagerModules = [
+    ../homeManagerModules
   ];
 
   extraSpecialArgs = {
