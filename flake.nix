@@ -20,6 +20,7 @@
     };
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
