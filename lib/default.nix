@@ -1,0 +1,3 @@
+{
+  injectHomeManager = import ./injectHomeManager.nix;
+}
