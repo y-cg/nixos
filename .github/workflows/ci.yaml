@@ -113,7 +113,7 @@ jobs:
           attic use central:${{ secrets.ATTIC_CACHE }}
 
       - name: Build TopLevel / ${{ matrix.host }}
-        run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+        run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel --fallback
 
       - name: Push to Attic
         if: github.event_name != 'pull_request'
