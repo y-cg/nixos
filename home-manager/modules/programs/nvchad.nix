@@ -4,7 +4,6 @@ let
 in
 {
   home.packages = with pkgs-unstable; [
-    inputs.nix4nvchad.packages."${pkgs.system}".nvchad
     tombi
     prettier
   ];
