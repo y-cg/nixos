@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install Nix
         uses: nixbuild/nix-quick-install-action@v34
@@ -62,7 +62,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install Nix
         uses: nixbuild/nix-quick-install-action@v34
@@ -101,7 +101,7 @@ jobs:
 
     steps:
       - name: Checkout tree
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Install Nix
         uses: nixbuild/nix-quick-install-action@v34
