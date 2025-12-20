@@ -2,6 +2,6 @@
   imports = [
     ./immich
     ./home-assistant
-    ./technitium.nix
+    ./adguard.nix
   ];
 }
