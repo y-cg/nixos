@@ -3,21 +3,34 @@
   ...
 }:
 let
+  lib = import ../lib;
   inherit (inputs) nixpkgs nixpkgs-unstable;
   mkNixosSystem =
     {
       meta,
       nixosModules,
+      homeManagerModules,
       extraSpecialArgs ? { },
       f ? nixpkgs.lib.nixosSystem,
       ...
     }:
-    f {
-      system = meta.system;
+    let
       specialArgs = {
         inherit inputs nixpkgs-unstable meta;
       } // extraSpecialArgs;
-      modules = nixosModules;
+      homeManagerInjection = lib.injectHomeManager {
+        inherit (meta) whoami;
+        inherit homeManagerModules;
+        extraSpecialArgs = specialArgs;
+      };
+    in
+    f {
+      inherit (meta) system;
+      inherit specialArgs;
+      modules = nixosModules ++ [
+        inputs.home-manager.nixosModules.default
+        homeManagerInjection
+      ];
     };
 in
 {
