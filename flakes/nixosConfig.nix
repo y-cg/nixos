@@ -12,11 +12,25 @@ let
       f ? nixpkgs.lib.nixosSystem,
       ...
     }:
+    let
+      pkgs-unstable = import nixpkgs-unstable {
+        system = meta.system;
+        config = {
+          allowUnfree = true;
+        };
+      };
+    in
     f {
       system = meta.system;
       specialArgs = {
-        inherit inputs nixpkgs-unstable meta;
-      } // extraSpecialArgs;
+        inherit
+          inputs
+          pkgs-unstable
+          nixpkgs-unstable
+          meta
+          ;
+      }
+      // extraSpecialArgs;
       modules = nixosModules;
     };
 in

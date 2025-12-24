@@ -1,4 +1,9 @@
-{ inputs, meta, ... }:
+{
+  inputs,
+  meta,
+  pkgs-unstable,
+  ...
+}:
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -8,7 +13,7 @@
         useUserPackages = true;
         users."${meta.whoami}" = ./home.nix;
         extraSpecialArgs = {
-          inherit inputs meta;
+          inherit inputs meta pkgs-unstable;
         };
       };
       # Optionally, use home-manager.extraSpecialArgs to pass
