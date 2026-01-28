@@ -54,6 +54,7 @@
       imports = [
         ./flakes/nixosConfig.nix
         ./flakes/image.nix
+        ./flakes/modules.nix
       ];
     };
 }
