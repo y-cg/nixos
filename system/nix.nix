@@ -6,6 +6,11 @@
   programs.nix-ld.enable = true;
 
   nix.settings = {
+
+    narinfo-cache-negative-ttl = 300;
+
+    warn-dirty = false;
+
     experimental-features = [
       "nix-command"
       # Enable flakes
