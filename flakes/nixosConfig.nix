@@ -15,9 +15,21 @@ let
       ...
     }:
     let
+      pkgs-unstable = import nixpkgs-unstable {
+        system = meta.system;
+        config = {
+          allowUnfree = true;
+        };
+      };
       specialArgs = {
-        inherit inputs nixpkgs-unstable meta;
-      } // extraSpecialArgs;
+        inherit
+          inputs
+          nixpkgs-unstable
+          pkgs-unstable
+          meta
+          ;
+      }
+      // extraSpecialArgs;
       homeManagerInjection = lib.injectHomeManager {
         inherit (meta) whoami;
         inherit homeManagerModules;
