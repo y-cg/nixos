@@ -2,8 +2,13 @@
   imports = [
     ./general.nix
     ./dotfiles.nix
-    ./packages.nix
+    ./devtools.nix
     ./nh.nix
-    ./programs
+    ./trivial.nix
+    ./starship.nix
+    ./git.nix
+    ./ssh.nix
+    ./zsh.nix
+    ./nvchad.nix
   ];
 }

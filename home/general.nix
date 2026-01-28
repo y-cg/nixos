@@ -8,6 +8,9 @@
   # release notes.
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
+  # let home manager install and manage itself.
+  programs.home-manager.enable = true;
+
   home.sessionVariables = {
     EDITOR = "nvim";
   };
