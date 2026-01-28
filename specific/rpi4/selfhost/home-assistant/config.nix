@@ -4,7 +4,7 @@
   ...
 }:
 let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   services.home-assistant = {
