@@ -4,7 +4,7 @@
     {
       nixpkgs.overlays = [
         (final: prev: {
-          inherit (nixpkgs-unstable.legacyPackages.${prev.system}) home-assistant;
+          inherit (nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}) home-assistant;
         })
       ];
 
