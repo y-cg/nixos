@@ -15,7 +15,8 @@
   ];
 
   homeManagerModules = [
-    ../homeManagerModules
+    ../modules/home-manager
+    ../home
   ];
 
   extraSpecialArgs = {
