@@ -7,5 +7,9 @@
     ./networking
     ./services
     ./users.nix
+    ./boot.nix
+    ./fs.nix
+    ./bluetooth.nix
+    ../selfhost
   ];
 }

@@ -8,7 +8,6 @@
 
   # https://nixos.wiki/wiki/NixOS_modules
   nixosModules = [
-    ../specific/rpi4
     ../system
     inputs.nixos-raspberrypi.nixosModules.sd-image
     inputs.nixos-raspberrypi.nixosModules.raspberry-pi-4.base
