@@ -10,18 +10,7 @@ on:
 
 jobs:
   build-toplevel:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - host: vps
-            os: ubuntu-latest
-          - host: wsl
-            os: ubuntu-latest
-          - host: rpi
-            os: ubuntu-24.04-arm
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout tree
@@ -34,31 +23,26 @@ jobs:
         uses: nix-community/cache-nix-action@v7
         with:
           # restore and save a cache using this key
-          primary-key: nix-${{ matrix.os }}-${{ matrix.host }}-${{ hashFiles('**/*.nix') }}
+          primary-key: nix-ubuntu-24.04-arm-rpi-${{ hashFiles('**/*.nix') }}
           # if there's no cache hit, restore a cache by this prefix
-          restore-prefixes-first-match: nix-${{ matrix.os }}-${{ matrix.host }}
+          restore-prefixes-first-match: nix-ubuntu-24.04-arm-rpi
           # collect garbage until Nix store size (in bytes) is at most this number
           # before trying to save a new cache
           gc-max-store-size-linux: 1073741824
           # do purge caches
           purge: true
           # purge all versions of the cache
-          purge-prefixes: cache-${{ matrix.os }}-${{ matrix.host }}
+          purge-prefixes: cache-ubuntu-24.04-arm-rpi
           # created more than this number of seconds ago relative to the start of the `Post Restore` phase
           purge-created: 0
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
-      - name: Build TopLevel / ${{ matrix.host }}
-        run: nix build .#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel
+      - name: Build TopLevel / rpi
+        run: nix build .#nixosConfigurations.rpi.config.system.build.toplevel
 
   build-rpi4-image:
-    strategy:
-      fail-fast: false
-      matrix:
-        os:
-          - ubuntu-24.04-arm
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - name: Checkout tree
@@ -71,20 +55,20 @@ jobs:
         uses: nix-community/cache-nix-action@v7
         with:
           # restore and save a cache using this key
-          primary-key: nix-${{ matrix.os }}-${{ matrix.host }}-${{ hashFiles('**/*.nix') }}
+          primary-key: nix-ubuntu-24.04-arm-rpi4-image-${{ hashFiles('**/*.nix') }}
           # if there's no cache hit, restore a cache by this prefix
-          restore-prefixes-first-match: nix-${{ matrix.os }}-${{ matrix.host }}
+          restore-prefixes-first-match: nix-ubuntu-24.04-arm-rpi4-image
           # collect garbage until Nix store size (in bytes) is at most this number
           # before trying to save a new cache
           gc-max-store-size-linux: 1073741824
           # do purge caches
           purge: true
           # purge all versions of the cache
-          purge-prefixes: cache-${{ matrix.os }}-${{ matrix.host }}
+          purge-prefixes: cache-ubuntu-24.04-arm-rpi4-image
           # created more than this number of seconds ago relative to the start of the `Post Restore` phase
           purge-created: 0
           # except the version with the `primary-key`, if it exists
           purge-primary-key: never
 
-      - name: Run Test
+      - name: Build SD image
         run: nix build .#rpi4-image

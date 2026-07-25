@@ -52,8 +52,6 @@ in
     {
       nixosConfigurations = {
         rpi = mkNixosSystem (import ../configurations/rpi4.nix { inherit inputs; });
-        vps = mkNixosSystem (import ../configurations/server.nix { inherit inputs; });
-        wsl = mkNixosSystem (import ../configurations/wsl.nix { inherit inputs; });
       };
     };
 }
