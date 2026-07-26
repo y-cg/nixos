@@ -1,5 +1,5 @@
 {
-  # pkgs-unstable from specialArgs (allowUnfree)
+  # pkgs-unstable from specialArgs (allowUnfree); HA overlay uses the same input
   pkgs-unstable,
   ...
 }:
@@ -14,6 +14,10 @@
       "radio_browser"
       "shopping_list"
       "homekit"
+      "homekit_controller"
+      "apple_tv"
+      "xiaomi_ble"
+      "thread"
       # Recommended for fast zlib compression
       # https://www.home-assistant.io/integrations/isal
       "isal"
@@ -21,6 +25,8 @@
       "ffmpeg"
       "zeroconf"
     ];
+    # home-assistant comes from nixpkgs-unstable via overlay; keep custom
+    # components on the same input so Python deps match
     customComponents = [
       pkgs-unstable.home-assistant-custom-components.xiaomi_home
     ];
