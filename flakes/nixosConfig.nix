@@ -17,9 +17,10 @@ let
     let
       pkgs-unstable = import nixpkgs-unstable {
         system = meta.system;
-        config = {
-          allowUnfree = true;
-        };
+        config.allowUnfree = true;
+        overlays = [
+          (import ../overlays/paho-mqtt.nix)
+        ];
       };
       specialArgs = {
         inherit
@@ -52,8 +53,6 @@ in
     {
       nixosConfigurations = {
         rpi = mkNixosSystem (import ../configurations/rpi4.nix { inherit inputs; });
-        vps = mkNixosSystem (import ../configurations/server.nix { inherit inputs; });
-        wsl = mkNixosSystem (import ../configurations/wsl.nix { inherit inputs; });
       };
     };
 }

@@ -1,11 +1,8 @@
 {
-  pkgs,
-  inputs,
+  # pkgs-unstable from specialArgs (allowUnfree)
+  pkgs-unstable,
   ...
 }:
-let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   services.home-assistant = {
     enable = true;
@@ -20,10 +17,13 @@ in
       # Recommended for fast zlib compression
       # https://www.home-assistant.io/integrations/isal
       "isal"
+      # Required by xiaomi_home (see package longDescription)
+      "ffmpeg"
+      "zeroconf"
     ];
-    # the default nixpkgs version is 25.05, where home-assistant is patched by unstable channel
-    # use same flake input to make sure python packages build in corret manner
-    customComponents = (import ./custom-components { pkgs = pkgs-unstable; });
+    customComponents = [
+      pkgs-unstable.home-assistant-custom-components.xiaomi_home
+    ];
     config = {
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/

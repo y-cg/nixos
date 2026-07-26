@@ -1,28 +1,16 @@
 {
-  description = "YCG's NixOS";
+  description = "YCG's NixOS (Raspberry Pi)";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
     flake-parts.url = "github:hercules-ci/flake-parts";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nixos-raspberrypi = {
       url = "github:nvmd/nixos-raspberrypi/main";
-    };
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL/main";
-    };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix4nvchad = {
       url = "github:nix-community/nix4nvchad";
@@ -50,7 +38,6 @@
       imports = [
         ./flakes/nixosConfig.nix
         ./flakes/image.nix
-        ./flakes/modules.nix
       ];
     };
 }

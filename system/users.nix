@@ -3,8 +3,8 @@
   security.sudo.wheelNeedsPassword = false;
   users.users."${meta.whoami}" = {
     createHome = true;
-    home = if pkgs.stdenv.isDarwin then "/Users/${meta.whoami}" else "/home/${meta.whoami}";
-    isNormalUser = true; # Seems that agenix works with normal users
+    home = "/home/${meta.whoami}";
+    isNormalUser = true;
     hashedPassword = ""; # Empty password
     # System users in NixOS don't get a login shell by default
     shell = pkgs.zsh;
