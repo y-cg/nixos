@@ -1,11 +1,8 @@
 {
-  pkgs,
-  inputs,
+  # pkgs-unstable from specialArgs (allowUnfree); HA overlay uses the same input
+  pkgs-unstable,
   ...
 }:
-let
-  pkgs-unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-in
 {
   services.home-assistant = {
     enable = true;
