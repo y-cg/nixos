@@ -1,10 +1,12 @@
-{ nixpkgs-unstable, ... }:
+{ nixpkgs-unstable, pkgs-unstable, ... }:
 {
   imports = [
     {
       nixpkgs.overlays = [
         (final: prev: {
-          inherit (nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}) home-assistant;
+          # Use specialArgs pkgs-unstable so HA picks up the same overlays
+          # (e.g. paho-mqtt doCheck = false) as custom components.
+          inherit (pkgs-unstable) home-assistant;
         })
       ];
 
