@@ -10,5 +10,6 @@
     ./ssh.nix
     ./zsh.nix
     ./nvchad.nix
+    ./tv.nix
   ];
 }
