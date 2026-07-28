@@ -11,5 +11,6 @@
     ./zsh.nix
     ./nvchad.nix
     ./tv.nix
+    ./pi.nix
   ];
 }

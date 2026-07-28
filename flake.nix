@@ -21,6 +21,9 @@
       url = "github:y-cg/nvchad";
       flake = false;
     };
+    llm-agents = {
+      url = "github:numtide/llm-agents.nix";
+    };
   };
 
   nixConfig = {
