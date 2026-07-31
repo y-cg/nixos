@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
     nix-search-cli
-    nixfmt-rfc-style
+    nixfmt
     nixd
     nil
     nix-output-monitor
