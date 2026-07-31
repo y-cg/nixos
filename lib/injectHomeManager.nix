@@ -10,6 +10,7 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
+        backupFileExtension = "backup";
         users."${whoami}" = {
           imports = homeManagerModules;
         };
