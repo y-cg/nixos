@@ -1,7 +1,6 @@
 {
   imports = [
     ./general.nix
-    ./dotfiles.nix
     ./devtools.nix
     ./nh.nix
     ./trivial.nix
@@ -12,5 +11,6 @@
     ./nvchad.nix
     ./tv.nix
     ./pi.nix
+    ./tmux
   ];
 }
