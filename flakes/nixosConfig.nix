@@ -29,6 +29,7 @@ let
           pkgs-unstable
           meta
           ;
+        sealed = lib.sealed;
       }
       // extraSpecialArgs;
       homeManagerInjection = lib.injectHomeManager {
