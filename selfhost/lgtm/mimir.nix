@@ -3,6 +3,7 @@
 { ... }:
 let
   ports = import ./ports.nix;
+  retention = "4320h"; # 180 days
 in
 {
   services.mimir = {
@@ -37,6 +38,9 @@ in
         kvstore.store = "inmemory";
         replication_factor = 1;
       };
+      # Retention: delete blocks older than `retention`. Mimir's default is
+      # 0s (keep forever), which is what we had before — unsafe on a Pi.
+      limits.compactor_blocks_retention_period = retention;
       ruler_storage = {
         backend = "filesystem";
         filesystem.dir = "/var/lib/mimir/rules";
