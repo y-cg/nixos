@@ -12,5 +12,6 @@
     ./tempo.nix
     ./mimir.nix
     ./collector.nix
+    ./node-exporter.nix
   ];
 }

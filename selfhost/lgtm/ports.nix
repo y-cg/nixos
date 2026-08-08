@@ -18,4 +18,6 @@
   # otel endpoint
   otlpGrpc = 4317; # OTel Collector, exposed on the LAN
   otlpHttp = 4318;
+  # node_exporter, scraped by the OTel collector over loopback
+  nodeExporter = 9100;
 }

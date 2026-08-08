@@ -5,6 +5,9 @@
 #   traces  -> Tempo   (loopback OTLP)
 #   metrics -> Mimir   (loopback Prometheus remote_write)
 #
+# It additionally scrapes the local node_exporter (prometheus receiver) so
+# host metrics reach Mimir through the same metrics pipeline.
+#
 # Logs can be added later with a third pipeline using the `loki` exporter
 # (hence the -contrib package).
 { pkgs, ... }:
@@ -21,9 +24,23 @@ in
     enable = true;
     package = pkgs.opentelemetry-collector-contrib;
     settings = {
-      receivers.otlp.protocols = {
-        grpc.endpoint = "0.0.0.0:${toString ports.otlpGrpc}";
-        http.endpoint = "0.0.0.0:${toString ports.otlpHttp}";
+      receivers = {
+        otlp.protocols = {
+          grpc.endpoint = "0.0.0.0:${toString ports.otlpGrpc}";
+          http.endpoint = "0.0.0.0:${toString ports.otlpHttp}";
+        };
+        # Scrape the local node_exporter and feed the metrics into the same
+        # pipeline as OTLP metrics below (-> Mimir via remote_write). The
+        # `prometheus` receiver ships in the -contrib package we use.
+        prometheus.config.scrape_configs = [
+          {
+            job_name = "node";
+            scrape_interval = "15s";
+            static_configs = [
+              { targets = [ "127.0.0.1:${toString ports.nodeExporter}" ]; }
+            ];
+          }
+        ];
       };
 
       processors = {
@@ -54,7 +71,7 @@ in
           exporters = [ "otlp" ];
         };
         metrics = {
-          receivers = [ "otlp" ];
+          receivers = [ "otlp" "prometheus" ];
           processors = [ "memory_limiter" "batch" ];
           exporters = [ "prometheusremotewrite" ];
         };
