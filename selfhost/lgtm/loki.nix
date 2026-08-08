@@ -12,13 +12,21 @@ in
       server = {
         http_listen_address = "127.0.0.1";
         http_listen_port = ports.loki;
-        grpc_listen_address = "127.0.0.1";
+        # gRPC is intentionally not pinned to loopback. Loki's monolith
+        # has components (distributor/ingester, frontend/scheduler/querier)
+        # that self-dial gRPC using the address auto-detected on the LAN
+        # iface; loopback-only breaks every push/query with "connection
+        # refused". The firewall keeps this port off the LAN. See mimir.nix.
         grpc_listen_port = ports.lokiGrpc;
       };
       common = {
         path_prefix = "/var/lib/loki";
         replication_factor = 1;
-        ring.kvstore.store = "inmemory";
+        ring = {
+          kvstore.store = "inmemory";
+          # Advertise loopback so ring members reach each other locally.
+          instance_addr = "127.0.0.1";
+        };
         storage.filesystem = {
           chunks_directory = "/var/lib/loki/chunks";
           rules_directory = "/var/lib/loki/rules";

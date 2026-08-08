@@ -4,12 +4,10 @@
 #
 #   traces  -> Tempo   (loopback OTLP)
 #   metrics -> Mimir   (loopback Prometheus remote_write)
+#   logs    -> Loki    (loopback OTLP, Loki >= 3.0 native OTLP ingestion)
 #
 # It additionally scrapes the local node_exporter (prometheus receiver) so
 # host metrics reach Mimir through the same metrics pipeline.
-#
-# Logs can be added later with a third pipeline using the `loki` exporter
-# (hence the -contrib package).
 { pkgs, ... }:
 let
   ports = import ./ports.nix;
@@ -62,6 +60,13 @@ in
         prometheusremotewrite = {
           endpoint = "http://127.0.0.1:${toString ports.mimir}/api/v1/push";
         };
+        # logs -> Loki via its native OTLP/HTTP endpoint (Loki >= 3.0).
+        # The contrib `loki` exporter is deprecated and slated for removal;
+        # native OTLP keeps resource/log attributes as structured metadata
+        # (Loki needs `allow_structured_metadata = true`, set in loki.nix).
+        "otlphttp/loki" = {
+          endpoint = "http://127.0.0.1:${toString ports.loki}/otlp";
+        };
       };
 
       service.pipelines = {
@@ -74,6 +79,11 @@ in
           receivers = [ "otlp" "prometheus" ];
           processors = [ "memory_limiter" "batch" ];
           exporters = [ "prometheusremotewrite" ];
+        };
+        logs = {
+          receivers = [ "otlp" ];
+          processors = [ "memory_limiter" "batch" ];
+          exporters = [ "otlphttp/loki" ];
         };
       };
     };
