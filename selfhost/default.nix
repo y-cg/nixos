@@ -2,6 +2,6 @@
   imports = [
     ./home-assistant
     ./adguard.nix
-    ./lgtm.nix
+    ./lgtm
   ];
 }
