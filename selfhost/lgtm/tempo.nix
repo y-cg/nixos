@@ -11,6 +11,8 @@ in
       server = {
         http_listen_address = "127.0.0.1";
         http_listen_port = ports.tempo;
+        grpc_listen_address = "127.0.0.1";
+        grpc_listen_port = ports.tempoGrpc;
       };
       distributor.receivers.otlp.protocols = {
         grpc.endpoint = "127.0.0.1:${toString ports.tempoOtlpGrpc}";

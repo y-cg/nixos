@@ -29,6 +29,14 @@ in
         sharding_ring.kvstore.store = "inmemory";
       };
       store_gateway.sharding_ring.kvstore.store = "inmemory";
+      # Single-instance: write quorum must be 1. Mimir defaults to
+      # replication_factor 3, whose quorum (2 live ingesters) a one-node
+      # install can never satisfy — pushes 500 with
+      # "at least 2 live replicas required, could only find 1".
+      ingester.ring = {
+        kvstore.store = "inmemory";
+        replication_factor = 1;
+      };
       ruler_storage = {
         backend = "filesystem";
         filesystem.dir = "/var/lib/mimir/rules";

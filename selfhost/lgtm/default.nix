@@ -11,5 +11,6 @@
     ./loki.nix
     ./tempo.nix
     ./mimir.nix
+    ./collector.nix
   ];
 }
